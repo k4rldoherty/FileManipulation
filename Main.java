@@ -14,21 +14,24 @@ public class Main {
         FileManipulator fileManipulator = new FileManipulator();
 
         while (true) {
+            
             // Prints Out the Menu
             System.out.println("\nMenu");
             System.out.println("\n1. Search for file.");
             System.out.println("\n2. Delete file.");
             System.out.println("\n3. Copy file.");
             System.out.println("\n4. Exit the program.");
+            
             // Prompts User for Choice
             System.out.print("\nYour choice:");
+            
             // Takes in input in form of an Integer
             int choice = scanner.nextInt();
+            
             // Consumes New Line
             scanner.nextLine();
             String currentPath = new java.io.File(".").getCanonicalPath();
 
-            //
             switch (choice) {
                 case 1:
                     System.out.print("\nCurrent PWD ->" + currentPath);
@@ -92,9 +95,6 @@ public class Main {
 
                     System.out.println("\nSpecify an ABSOLUTE path to the location you want to copy the file to:");
                     String copyDestination = scanner.next();
-
-                    // Path copyFileFrom = Paths.get(copySource);
-                    // Path fileDestination = Paths.get(copyDestination);
 
                     fileManipulator.copyFile(copySource, copyDestination);
 
