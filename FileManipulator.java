@@ -25,6 +25,10 @@ Make sure to use exception handling to gracefully handle any potential errors du
 
 import java.util.ArrayList;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -64,8 +68,27 @@ public class FileManipulator {
         fileToDelete.delete();
     }
 
-    public void copyFile(String sourcePath, String destinationPath) {
-
+    public void copyFile(String sourcePath, String destinationPath) throws IOException {
+        String[] targetFileSplit = sourcePath.split("/");
+        
+        // gets the name of the file to make a copy.
+        String targetFileName = targetFileSplit[targetFileSplit.length - 1];
+        
+        System.out.println("\nCopying file '" + targetFileName + "' to '" + destinationPath + "' ...");
+        File newFile = new File(destinationPath + targetFileName);
+        FileInputStream stream = new FileInputStream(sourcePath);
+        FileOutputStream outputStream = new FileOutputStream(newFile);
+        int i;
+        while((i = stream.read()) != -1) {
+            outputStream.write(i);
+        }
+        if(stream != null) {
+            stream.close();
+        }
+        if (outputStream != null) {  
+            outputStream.close();  
+        }  
+        
     }
     
 }
