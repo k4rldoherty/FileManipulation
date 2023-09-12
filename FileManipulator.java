@@ -10,8 +10,6 @@ File Copy: Implement a method copyFile(String sourcePath, String destinationPath
 
 File Deletion: Implement a method deleteFile(String filePath) that deletes a file specified by its path.
 
-Recursive File Search: Extend the file search functionality to make it recursive. Implement a method recursiveSearchFiles(String directory, String extension) that searches for files with the given extension in the specified directory and all its subdirectories.
-
 Menu System: Create a simple menu system that allows users to choose the operation they want to perform (search, copy, delete, recursive search), input the required parameters (e.g., file paths), and execute the chosen operation.
 
 Error Handling: Handle potential exceptions that might occur during file operations, such as file not found, permission issues, etc. Display appropriate error messages to the user.
@@ -27,12 +25,36 @@ Make sure to use exception handling to gracefully handle any potential errors du
 
 import java.util.ArrayList;
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class FileManipulator {
 
-    public ArrayList<String> searchFiles(String directory, String extension) {
-        ArrayList<String> filePaths = new ArrayList<>();
-
+    
+    public ArrayList<File> searchFiles(Path directory, String extension) {
+        ArrayList<File> filePaths = new ArrayList<>();
+        File directoryFile = new File(directory.toString());
+        if (directoryFile.isDirectory()) {
+            // Gets a list of files in directory passed to function
+            File[] files = directoryFile.listFiles();
+            // If list is not empty
+            if (files != null) {
+                for (File file : files) {
+                    // loops through files and checks if any are inner directories
+                    if(file.isDirectory()) {
+                        // If it finds an inner directory - recursively call the search function again 
+                        //until no sub directories are present
+                        searchFiles(file.toPath(), extension);
+                    } else {
+                        if(file.getName().endsWith(extension)){
+                            filePaths.add(file);
+                        }
+                    }
+                }
+            }
+        }
+        
         return filePaths;
     }
 
