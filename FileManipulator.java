@@ -47,6 +47,7 @@ public class FileManipulator {
                         //until no sub directories are present
                         searchFiles(file.toPath(), extension);
                     } else {
+                        // if file name ends with provided extension, add to list
                         if(file.getName().endsWith(extension)){
                             filePaths.add(file);
                         }
@@ -58,8 +59,9 @@ public class FileManipulator {
         return filePaths;
     }
 
-    public void deleteFile(String filePath) {
-
+    public void deleteFile(Path filePath) {
+        File fileToDelete = new File(filePath.toString());
+        fileToDelete.delete();
     }
 
     public void copyFile(String sourcePath, String destinationPath) {

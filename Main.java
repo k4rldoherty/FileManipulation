@@ -25,11 +25,11 @@ public class Main {
             int choice = scanner.nextInt();
             // Consumes New Line
             scanner.nextLine();
+            String currentPath = new java.io.File(".").getCanonicalPath();
 
             //
             switch (choice) {
                 case 1:
-                    String currentPath = new java.io.File(".").getCanonicalPath();
                     System.out.print("\nCurrent PWD ->" + currentPath);
                     
                     System.out.println("\nFile Search Selected...");
@@ -59,16 +59,19 @@ public class Main {
 
                 case 2:
                     System.out.println("\nDelete File Selected...");
+                    System.out.print("\nCurrent PWD ->" + currentPath);
 
-                    System.out.println("\nSpecify a file path to delete:");
+                    System.out.println("\nSpecify an ABSOLUTE file path to delete:");
                     String path = scanner.nextLine();
+
+                    Path pathFromStrDelete = Paths.get(currentPath + path);
 
                     System.out.println("\nAre you sure you want to delete this file: '" + path + "' ? Y/N:");
                     String deleteChoice = scanner.nextLine();
 
                     if (deleteChoice.contains("Y")) {
                         System.out.println("\nDeleting the file '" + path + "' ...");
-                        fileManipulator.deleteFile(path);
+                        fileManipulator.deleteFile(pathFromStrDelete);
                     } else if (deleteChoice.contains("N")) {
                         System.out.println("\nNo selected, redirecting to main menu...\n");
                         break;
