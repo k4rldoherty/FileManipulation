@@ -1,0 +1,73 @@
+package FileManipulator;
+import java.util.Scanner;
+import java.util.List;
+
+public class Main {
+    public static void main(String[] args) {
+        FileManipulator fileManipulator = new FileManipulator();
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("Menu:");
+            System.out.println("1. Search Files by Extension");
+            System.out.println("2. Copy a File");
+            System.out.println("3. Delete a File");
+            System.out.println("4. Recursive Search Files by Extension");
+            System.out.println("5. Exit");
+
+            System.out.print("Enter your choice: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume the newline
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter directory path: ");
+                    String directory = scanner.nextLine();
+                    System.out.print("Enter file extension (e.g., .txt): ");
+                    String extension = scanner.nextLine();
+                    List<String> foundFiles = fileManipulator.searchFiles(directory, extension);
+                    System.out.println("Matching files:");
+                    for (String filePath : foundFiles) {
+                        System.out.println(filePath);
+                    }
+                    break;
+
+                case 2:
+                    System.out.print("Enter source file path: ");
+                    String sourcePath = scanner.nextLine();
+                    System.out.print("Enter destination file path: ");
+                    String destinationPath = scanner.nextLine();
+                    fileManipulator.copyFile(sourcePath, destinationPath);
+                    System.out.println("File copied successfully.");
+                    break;
+
+                case 3:
+                    System.out.print("Enter file path to delete: ");
+                    String filePathToDelete = scanner.nextLine();
+                    fileManipulator.deleteFile(filePathToDelete);
+                    System.out.println("File deleted successfully.");
+                    break;
+
+                case 4:
+                    System.out.print("Enter directory path: ");
+                    String recursiveDirectory = scanner.nextLine();
+                    System.out.print("Enter file extension (e.g., .txt): ");
+                    String recursiveExtension = scanner.nextLine();
+                    List<String> recursiveFoundFiles = fileManipulator.recursiveSearchFiles(recursiveDirectory, recursiveExtension);
+                    System.out.println("Matching files (including subdirectories):");
+                    for (String filePath : recursiveFoundFiles) {
+                        System.out.println(filePath);
+                    }
+                    break;
+
+                case 5:
+                    System.out.println("Exiting the program.");
+                    scanner.close();
+                    System.exit(0);
+
+                default:
+                    System.out.println("Invalid choice. Please enter a valid option.");
+            }
+        }
+    }
+}
